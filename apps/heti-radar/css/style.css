@@ -94,7 +94,14 @@ body {
     border: 4px double #ed534f;
 }
 
+#powerPanel {
+    display: none;
+    animation: blinker 1s linear infinite;
+}
 
+@keyframes blinker {  
+  50% { opacity: 0; }
+}
 
 
 #controlPanel {
@@ -142,5 +149,3 @@ body {
 
     }
 }
-
-

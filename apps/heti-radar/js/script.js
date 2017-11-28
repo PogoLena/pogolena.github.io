@@ -11,15 +11,21 @@ function pageLoad() {
 
 function screenPowerOn() {
     powerButton.innerText = 'выкл';
+    var powerText = document.getElementById("powerPanel");
+    powerText.style.display = "initial";
     powerButton.classList.add('pressed');
     powerButton.onclick = screenPowerOff;
     powerScreenOn = setInterval(getMap, 1000); 
 }
 function screenPowerOff() {
     powerButton.innerText = 'вкл';
+    var powerText = document.getElementById("powerPanel");
+    powerText.style.display = 'none'
     powerButton.classList.remove('pressed');
     powerButton.onclick = screenPowerOn;
     document.getElementById("screen-output").innerHTML = '';
+    document.getElementById("id-output").innerHTML = 'NO DATA';
+    document.getElementById("date-output").innerHTML = 'NO DATA';
     clearInterval(powerScreenOn);
 }
 function getMap() {
@@ -30,8 +36,9 @@ function getMap() {
             document.getElementById("id-output").innerHTML = json_map.id;
             document.getElementById("date-output").innerHTML = new Date(json_map.date);
             document.getElementById("screen-output").innerHTML = json_map.map;
-
-        }
+        } else {
+            powerText.innerHTML = "Соединение блокируется";
+        };
       };
       xhttp.open("GET", "http://radar.lafox.net/api/getMap", true);
       xhttp.send();

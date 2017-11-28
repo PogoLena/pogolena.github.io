@@ -11,8 +11,6 @@ function pageLoad() {
 
 function screenPowerOn() {
     powerButton.innerText = 'выкл';
-    var powerText = document.getElementById("powerPanel");
-    powerText.style.display = "initial";
     powerButton.classList.add('pressed');
     powerButton.onclick = screenPowerOff;
     powerScreenOn = setInterval(getMap, 1000); 
@@ -20,7 +18,7 @@ function screenPowerOn() {
 function screenPowerOff() {
     powerButton.innerText = 'вкл';
     var powerText = document.getElementById("powerPanel");
-    powerText.style.display = 'none'
+    powerText.innerHTML = "Ожидание";
     powerButton.classList.remove('pressed');
     powerButton.onclick = screenPowerOn;
     document.getElementById("screen-output").innerHTML = '';
@@ -30,14 +28,16 @@ function screenPowerOff() {
 }
 function getMap() {
       var xhttp = new XMLHttpRequest();
+      var powerText = document.getElementById("powerPanel");
       xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
+            powerText.innerHTML = "Получение данных";
             var json_map = JSON.parse(this.responseText);
             document.getElementById("id-output").innerHTML = json_map.id;
             document.getElementById("date-output").innerHTML = new Date(json_map.date);
             document.getElementById("screen-output").innerHTML = json_map.map;
-        } else {
-            powerText.innerHTML = "Соединение блокируется";
+        } else if (this.readyState == 4 && this.status != 200 ) {        
+            powerText.innerHTML = "Блокируется";
         };
       };
       xhttp.open("GET", "http://radar.lafox.net/api/getMap", true);

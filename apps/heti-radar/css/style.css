@@ -95,7 +95,6 @@ body {
 }
 
 #powerPanel {
-    display: none;
     animation: blinker 1s linear infinite;
 }
 
@@ -121,6 +120,7 @@ body {
     text-transform: uppercase;
     padding: 10px 15px;
     width: 100%;
+    transition: background .2s;
 
 }
 .control-button:hover {
